@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: ecommerce
+      POSTGRES_USER: lenhatthanh
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  app:
+    build:
+      context: ./
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ecommerce
+      SPRING_DATASOURCE_USERNAME: lenhatthanh
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "3005:8081"
+    networks:
+      - mynetwork
+networks:
+  mynetwork:
+volumes:
+  postgres-data:
